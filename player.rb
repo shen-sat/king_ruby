@@ -12,7 +12,6 @@ class Player
 		@width = 32
 		@height = 32
 		@speed = 1
-		@counter = 1
 		@gap_between_player_bottom_and_top_collider = 16
 		@gap_between_player_top_and_bottom_collider = 16
 		@gap_between_player_right_and_left_collider = 16
@@ -35,7 +34,7 @@ class Player
 	def right
 		@right_flag = true
 		@player_colliders.right_collision_check(@x, @y, @speed, @gap_between_player_left_and_right_collider)
-		@x += @speed unless player_colliders.right_collision
+		@x += @speed unless @player_colliders.right_collision
 		@image = @right_walk_anim[Gosu.milliseconds / 200 % @right_walk_anim.size]
 	end
 
