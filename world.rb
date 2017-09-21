@@ -1,5 +1,8 @@
 class Colliders
 	attr_reader :top_collision
+	attr_reader :bottom_collision
+	attr_reader :left_collision
+	attr_reader :right_collision
 
 	def initialize(collider_name)
 		@collider_name = collider_name
@@ -97,20 +100,90 @@ class Colliders
 					@top_collision = true
 				end
 			end 
-
-=begin
-			if ((player_left || player_right) >= x_left) && ((player_left || player_right) <= x_right) && player_bottom > y_top && x_left != x_right
-				#if we meet the criteria for being under a line, if the distance between player and line is less than a certain value, we have collided.  
-				#I've used the player's bottom boundary here because using top boundary would lead to too fine a margin for collision detection.
-				if Gosu.distance(@x,player_bottom - @speed,@x,y_top) <= @gap_between_player_bottom_and_top_collider	
-					@top_collision = true
-				end
-			end
-=end
 		end
 		@top_collision
-		puts "test"
 	end
 
+	def bottom_collision_check(x, y, speed, gap_between_player_top_and_bottom_collider)
+		@x = x
+		@y = y
+		@speed = speed
+		@gap_between_player_top_and_bottom_collider = gap_between_player_top_and_bottom_collider
+		player_top = @y
+		player_right = @x + 8
+		player_left = @x - 8
+		@bottom_collision = false 
+		@line_ranges.each do |range|
+			x_left = range[:x_range][0]
+			x_right = range[:x_range][1]
+			y_bottom = range[:y_range][0]
+			if (player_left >= x_left) && (player_left <= x_right) && player_top < y_bottom && x_left != x_right
+				if Gosu.distance(@x,player_top + @speed,@x,y_bottom) <= @gap_between_player_top_and_bottom_collider
+					@bottom_collision = true
+				end
+			end
+			if (player_right >= x_left) && (player_right <= x_right) && player_top < y_bottom && x_left != x_right
+				if Gosu.distance(@x,player_top + @speed,@x,y_bottom) <= @gap_between_player_top_and_bottom_collider
+					@bottom_collision = true
+				end
+			end 
+
+		end
+
+	end
+
+	def left_collision_check(x, y, speed, gap_between_player_right_and_left_collider)
+		@x = x
+		@y = y
+		@speed = speed
+		@gap_between_player_right_and_left_collider = gap_between_player_right_and_left_collider
+		player_top = @y
+		player_bottom = @y + 16
+		player_right = @x + 8
+		player_left = @x - 8
+		@left_collision = false 
+		@line_ranges.each do |range|
+			y_top = range[:y_range][0]
+			y_bottom = range[:y_range][1]
+			x_left = range[:x_range][0]
+			if (player_top >= y_top) && (player_top <= y_bottom) && @x > x_left && y_top != y_bottom
+				if Gosu.distance(player_right - @speed,@y,x_left,@y) <= @gap_between_player_right_and_left_collider
+					@left_collision = true
+				end
+			end
+			if (player_bottom >= y_top) && (player_bottom <= y_bottom) && @x > x_left && y_top != y_bottom
+				if Gosu.distance(player_right - @speed,@y,x_left,@y) <= @gap_between_player_right_and_left_collider
+					@left_collision = true
+				end
+			end 
+		end
+	end
+
+	def right_collision_check(x, y, speed, gap_between_player_left_and_right_collider)
+		@x = x
+		@y = y
+		@speed = speed
+		@gap_between_player_left_and_right_collider = gap_between_player_left_and_right_collider
+		player_top = @y
+		player_bottom = @y + 16
+		player_left = @x - 8
+		@right_collision = false 
+		@line_ranges.each do |range|
+			y_top = range[:y_range][0]
+			y_bottom = range[:y_range][1]
+			x_right = range[:x_range][1]
+			if (player_top >= y_top) && (player_top <= y_bottom) && @x < x_right && y_top != y_bottom
+				if Gosu.distance(player_left + @speed,@y,x_right,@y) <= @gap_between_player_left_and_right_collider
+					@right_collision = true
+				end
+			end
+			if (player_bottom >= y_top) && (player_bottom <= y_bottom) && @x < x_right && y_top != y_bottom
+				if Gosu.distance(player_left + @speed,@y,x_right,@y) <= @gap_between_player_left_and_right_collider
+					@right_collision = true
+				end
+			end
+		end
+
+	end
 
 end
