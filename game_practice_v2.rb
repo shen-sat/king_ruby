@@ -23,7 +23,7 @@ class Game_Window < Gosu::Window
 	@mages = Mages.new(collider_layer_name = "mages")
 	@snake_green = Snake.new(collider_layer_name = "colliders")
 	@king.warp(32,40)
-	@snake_green.warp(32,256)
+	@snake_green.warp(32,40)
 	
  end
   
