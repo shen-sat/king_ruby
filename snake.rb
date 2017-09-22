@@ -1,6 +1,6 @@
 class Snake
 	def initialize(colliders_name)
-		@idle_anim = Gosu::Image.new("kratos.png", :tileable => true)
+		@idle_anim = Gosu::Image.new("snake_idle.png", :tileable => true)
 		@height = 32
 		@width = 32
 		@colliders_name = colliders_name

@@ -59,6 +59,7 @@ class Game_Window < Gosu::Window
 	@king.draw
 	@mages.draw
 	@snake_green.draw
+	@mushrooms.draw
   end
 end
 
