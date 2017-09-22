@@ -8,7 +8,7 @@ class Mushrooms
 				@mages_data_from_tiled =  x["objects"]
 			end
 		end
-		@red_mushroom_image = Gosu::Image.new("red_mushroom.png", :tileable => true)
+		@red_mushroom_image = Gosu::Image.new("kratos.png")
 	end
 
 

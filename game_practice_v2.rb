@@ -7,10 +7,6 @@ require_relative 'world'
 require_relative 'snake'
 require_relative 'mushrooms'
 
-#sets the directory to where the game is located *DELETE IF NECCESSARY*
-#Dir.chdir "c:/"
-#Dir.chdir "users/shen/desktop/local_practice"
-
 class Game_Window < Gosu::Window
   
   def initialize
