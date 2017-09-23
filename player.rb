@@ -12,10 +12,10 @@ class Player
 		@width = 32
 		@height = 32
 		@speed = 1
-		@gap_between_player_bottom_and_top_collider = 16
-		@gap_between_player_top_and_bottom_collider = 16
-		@gap_between_player_right_and_left_collider = 16
-		@gap_between_player_left_and_right_collider = 16
+		@gap_between_player_bottom_and_top_collider = 8
+		@gap_between_player_top_and_bottom_collider = 12
+		@gap_between_player_right_and_left_collider = 12
+		@gap_between_player_left_and_right_collider = 12
 		@colliders_name = colliders_name
 		@player_colliders = Colliders.new("#{@colliders_name}")
 		@line_ranges = @player_colliders.calculate_lines

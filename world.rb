@@ -78,9 +78,9 @@ class Colliders
 		@y = y
 		@speed = speed
 		@gap_between_player_bottom_and_top_collider = gap_between_player_bottom_and_top_collider
-		player_bottom = @y + 16
-		player_right = @x + 8
-		player_left = @x - 8
+		player_bottom = @y + 12
+		player_right = @x + 6
+		player_left = @x - 6
 		#at the start of every check, we assume there is no collision
 		@top_collision = false
 		#Then we look to see if we are within the x values in all the lines (colliders) we have. 
@@ -109,9 +109,9 @@ class Colliders
 		@y = y
 		@speed = speed
 		@gap_between_player_top_and_bottom_collider = gap_between_player_top_and_bottom_collider
-		player_top = @y
-		player_right = @x + 8
-		player_left = @x - 8
+		player_top = @y + 4
+		player_right = @x + 6
+		player_left = @x - 6
 		@bottom_collision = false 
 		@line_ranges.each do |range|
 			x_left = range[:x_range][0]
@@ -137,10 +137,10 @@ class Colliders
 		@y = y
 		@speed = speed
 		@gap_between_player_right_and_left_collider = gap_between_player_right_and_left_collider
-		player_top = @y
-		player_bottom = @y + 16
-		player_right = @x + 8
-		player_left = @x - 8
+		player_top = @y + 4
+		player_bottom = @y + 12
+		player_right = @x + 6
+		player_left = @x - 6
 		@left_collision = false 
 		@line_ranges.each do |range|
 			y_top = range[:y_range][0]
@@ -164,9 +164,9 @@ class Colliders
 		@y = y
 		@speed = speed
 		@gap_between_player_left_and_right_collider = gap_between_player_left_and_right_collider
-		player_top = @y
-		player_bottom = @y + 16
-		player_left = @x - 8
+		player_top = @y + 4
+		player_bottom = @y + 12
+		player_left = @x - 6
 		@right_collision = false 
 		@line_ranges.each do |range|
 			y_top = range[:y_range][0]

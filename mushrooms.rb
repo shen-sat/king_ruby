@@ -1,8 +1,8 @@
 class Mushrooms
 	def initialize(colliders_name)
 		@colliders_name = colliders_name
-		@width = 32
-		@height = 32
+		@width = 16
+		@height = 16
 		file = File.read("map.json")
 		data_hash = JSON.parse(file)
 		data_hash["layers"].each do |x|
@@ -15,7 +15,7 @@ class Mushrooms
 			centre_x = data["x"] + (data["width"]/2)
 			centre_y = data["y"] + (data["height"]/2)
 			if data["name"] == "red"
-				@all_mushrooms.push ({shroom_image: Gosu::Image.new("red_mushroom1.png"), centre_x: centre_x, centre_y: centre_y})
+				@all_mushrooms.push ({shroom_image: Gosu::Image.new("red_mushroom2.png"), centre_x: centre_x, centre_y: centre_y})
 			end
 		end
 	end

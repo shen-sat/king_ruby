@@ -15,6 +15,7 @@ class Game_Window < Gosu::Window
     self.caption = "game_practice"
 	#loads images from Tiled *DELETE IF NECCESSARY*
 	@background_image = Gosu::Tiled.load_json(self, "map.json")
+  @tree_image = Gosu::Image.new("tree.png", :tileable => true)
 	
 	@king = Player.new(collider_layer_name = "colliders")
 	@mages = Mages.new(collider_layer_name = "mages")
@@ -56,6 +57,12 @@ class Game_Window < Gosu::Window
   
   def draw
 	@background_image.draw(0,0)
+  if @king.y > 50
+    @tree_depth = 1
+  else
+    @tree_depth = 30
+  end
+  @tree_image.draw(112,0,@tree_depth)
 	@king.draw
 	@mages.draw
 	@snake_green.draw
