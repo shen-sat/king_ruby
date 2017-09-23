@@ -47,8 +47,8 @@ class Game_Window < Gosu::Window
   	else
   		@king.idle
   	end
-
   	@mages.collision_checker(@king.x, @king.y)
+    @mushrooms.collision_checker(@king.x, @king.y)
   	@snake_green.move
   end
   

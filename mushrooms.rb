@@ -15,15 +15,20 @@ class Mushrooms
 			centre_x = data["x"] + (data["width"]/2)
 			centre_y = data["y"] + (data["height"]/2)
 			if data["name"] == "red"
-				@all_mushrooms.push ({shroom_image: Gosu::Image.new("red_mushroom.png"), draw_x: centre_x - @width/2, draw_y: centre_y - @height/2})
+				@all_mushrooms.push ({shroom_image: Gosu::Image.new("red_mushroom1.png"), centre_x: centre_x, centre_y: centre_y})
 			end
 		end
-	puts @all_mushrooms
+	end
+
+	def collision_checker(player_x, player_y)
+		@player_x = player_x
+		@player_y = player_y
+		@all_mushrooms.reject! {|shroom| Gosu.distance(@player_x,@player_y,shroom[:centre_x],shroom[:centre_y]) < 16}
 	end
 
 	def draw
 		@all_mushrooms.each do |mushroom|
-			mushroom[:shroom_image].draw(mushroom[:draw_x], mushroom[:draw_y], 20)
+			mushroom[:shroom_image].draw(mushroom[:centre_x] - @width/2, mushroom[:centre_y] - @height/2, 20)
 		end
 	end
 
