@@ -50,7 +50,7 @@ class Game_Window < Gosu::Window
   	end
   	@mages.collision_checker(@king.x, @king.y)
     @mushrooms.collision_checker(@king.x, @king.y)
-  	@snake_green.move
+  	#@snake_green.move
   end
   
   
@@ -65,7 +65,7 @@ class Game_Window < Gosu::Window
   @tree_image.draw(112,0,@tree_depth)
 	@king.draw
 	@mages.draw
-	@snake_green.draw
+	#@snake_green.draw
 	@mushrooms.draw
   end
 end

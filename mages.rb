@@ -20,9 +20,9 @@ class Mages
 			if Gosu.distance(@player_x,@player_y,centre_x,centre_y) < 16
 				@mage_collision = true
 				if data["name"] == "mage_1"
-					@mage_text = Gosu::Image.from_text("Hello...", 20, {})
+					@mage_text = Gosu::Image.from_text("The shrooms here taste great." + "\n" + "They also contain anti-venom.", 16, {})
 				elsif data["name"] == "mage_2"
-					@mage_text = Gosu::Image.from_text("...world!", 20, {})
+					@mage_text = Gosu::Image.from_text("...world!", 16, {})
 				end
 			end
 		end
