@@ -17,7 +17,7 @@ class Mages
 		@mages_data_from_tiled.each do |data|
 			centre_x = data["x"] + (data["width"]/2)
 			centre_y = data["y"] + (data["height"]/2)
-			if Gosu.distance(@player_x,@player_y,centre_x,centre_y) < 16
+			if Gosu.distance(@player_x,@player_y,centre_x,centre_y) < 10
 				@mage_collision = true
 				if data["name"] == "mage_1"
 					@mage_text = Gosu::Image.from_text("The shrooms here taste great." + "\n" + "They also contain anti-venom.", 16, {})

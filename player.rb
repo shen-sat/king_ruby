@@ -12,12 +12,13 @@ class Player
 		@width = 32
 		@height = 32
 		@speed = 1
-		@gap_between_player_bottom_and_top_collider = 8
-		@gap_between_player_top_and_bottom_collider = 12
-		@gap_between_player_right_and_left_collider = 12
-		@gap_between_player_left_and_right_collider = 12
+		@centre_and_top_gap = 6
+		@centre_and_bottom_gap = 16
+		@centre_and_left_gap = 6
+		@centre_and_right_gap = 6
+		@buffer = 4
 		@colliders_name = colliders_name
-		@player_colliders = Colliders.new("#{@colliders_name}")
+		@player_colliders = Colliders.new("#{@colliders_name}", @buffer, @centre_and_top_gap, @centre_and_bottom_gap, @centre_and_left_gap, @centre_and_right_gap)
 		@line_ranges = @player_colliders.calculate_lines
 	end
 	
@@ -33,20 +34,20 @@ class Player
 
 	def right
 		@right_flag = true
-		@player_colliders.right_collision_check(@x, @y, @speed, @gap_between_player_left_and_right_collider)
+		@player_colliders.right_collision_check(@x, @y, @speed)
 		@x += @speed unless @player_colliders.right_collision
 		@image = @right_walk_anim[Gosu.milliseconds / 200 % @right_walk_anim.size]
 	end
 
 	def left
 		@right_flag = false
-		@player_colliders.left_collision_check(@x, @y, @speed, @gap_between_player_right_and_left_collider)
+		@player_colliders.left_collision_check(@x, @y, @speed)
 		@x-= @speed unless @player_colliders.left_collision
 		@image = @left_walk_anim[Gosu.milliseconds / 200 % @left_walk_anim.size]
 	end
 
 	def up
-		@player_colliders.top_collision_check(@x, @y, @speed, @gap_between_player_bottom_and_top_collider)
+		@player_colliders.top_collision_check(@x, @y, @speed)
 		@y -= @speed unless @player_colliders.top_collision
 		if @right_flag
 			@image = @right_walk_anim[Gosu.milliseconds / 200 % @right_walk_anim.size]
@@ -56,7 +57,7 @@ class Player
 	end
 
 	def down
-		@player_colliders.bottom_collision_check(@x, @y, @speed, @gap_between_player_top_and_bottom_collider)
+		@player_colliders.bottom_collision_check(@x, @y, @speed)
 		@y += @speed unless @player_colliders.bottom_collision
 		if @right_flag
 			@image = @right_walk_anim[Gosu.milliseconds / 200 % @right_walk_anim.size]

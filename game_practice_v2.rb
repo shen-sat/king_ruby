@@ -19,10 +19,10 @@ class Game_Window < Gosu::Window
 	
 	@king = Player.new(collider_layer_name = "colliders")
 	@mages = Mages.new(collider_layer_name = "mages")
-	@snake_green = Snake.new(collider_layer_name = "colliders")
+	@snake_red = Snake.new(collider_layer_name = "snake_red")
 	@mushrooms = Mushrooms.new(collider_layer_name = "mushrooms")
 	@king.warp(32,40)
-	@snake_green.warp(32,40)
+	@snake_red.warp(48,96)
 	
  end
   
@@ -50,7 +50,7 @@ class Game_Window < Gosu::Window
   	end
   	@mages.collision_checker(@king.x, @king.y)
     @mushrooms.collision_checker(@king.x, @king.y)
-  	#@snake_green.move
+  	@snake_red.move(@king.x, @king.y)
   end
   
   
@@ -65,7 +65,7 @@ class Game_Window < Gosu::Window
   @tree_image.draw(112,0,@tree_depth)
 	@king.draw
 	@mages.draw
-	#@snake_green.draw
+	@snake_red.draw
 	@mushrooms.draw
   end
 end
