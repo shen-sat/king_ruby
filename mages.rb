@@ -23,6 +23,8 @@ class Mages
 					@mage_text = Gosu::Image.from_text("The shrooms here taste great." + "\n" + "They also contain anti-venom.", 16, {})
 				elsif data["name"] == "mage_2"
 					@mage_text = Gosu::Image.from_text("...world!", 16, {})
+				elsif data["name"] == "mage_3"
+					@mage_text = Gosu::Image.from_text("The prophecy tells of king who can" + "\n" + "complete levels by opening chests.", 16, {})
 				end
 			end
 		end

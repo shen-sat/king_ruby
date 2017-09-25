@@ -9,6 +9,7 @@ require_relative 'mushrooms'
 
 class Game_Window < Gosu::Window
   
+  
   def initialize
     #sets up the window space and title
 	super(384, 256, false)
@@ -16,13 +17,16 @@ class Game_Window < Gosu::Window
 	#loads images from Tiled *DELETE IF NECCESSARY*
 	@background_image = Gosu::Tiled.load_json(self, "map.json")
   @tree_image = Gosu::Image.new("tree.png", :tileable => true)
+  
 	
 	@king = Player.new(collider_layer_name = "colliders")
 	@mages = Mages.new(collider_layer_name = "mages")
 	@snake_red = Snake.new(collider_layer_name = "snake_red")
-	@mushrooms = Mushrooms.new(collider_layer_name = "mushrooms")
+	@snake_blue = Snake.new(collider_layer_name = "snake_blue")
+  @mushrooms = Mushrooms.new(collider_layer_name = "mushrooms")
 	@king.warp(32,40)
 	@snake_red.warp(48,96)
+  @snake_blue.warp(304,32)
 	
  end
   
@@ -45,12 +49,19 @@ class Game_Window < Gosu::Window
   		@king.up
   	elsif Gosu.button_down? Gosu::KB_DOWN
   		@king.down
-  	else
+    else
   		@king.idle
   	end
   	@mages.collision_checker(@king.x, @king.y)
     @mushrooms.collision_checker(@king.x, @king.y)
-  	@snake_red.move(@king.x, @king.y)
+  	@snake_red.move(@king.x, @king.y, @mushrooms.eaten_shroom_red)
+    @snake_blue.move(@king.x, @king.y, @mushrooms.eaten_shroom_blue)
+    death_checker
+  end
+
+  def death_checker
+    #puts @snake_red.player_dead
+    #puts @snake_blue.player_dead
   end
   
   
@@ -58,7 +69,7 @@ class Game_Window < Gosu::Window
   def draw
 	@background_image.draw(0,0)
   if @king.y > 50
-    @tree_depth = 1
+    @tree_depth = 3
   else
     @tree_depth = 30
   end
@@ -66,6 +77,7 @@ class Game_Window < Gosu::Window
 	@king.draw
 	@mages.draw
 	@snake_red.draw
+  @snake_blue.draw
 	@mushrooms.draw
   end
 end

@@ -1,4 +1,6 @@
-class Snake
+class Snake	
+	attr_reader :player_dead
+
 	def initialize(colliders_name)
 		@idle_anim = Gosu::Image.new("snake_idle.png", :tileable => true)
 		@height = 32
@@ -17,7 +19,14 @@ class Snake
 		@move_counter = 1
 		@frame_speed = 1
 		@chase = false
-		puts @line_ranges
+		#@x_limits = []
+		#@y_limts = []
+		#@line_ranges.each do |line|
+			#@x_limits.push(line[:x_range][0..1])
+			#@y_limits.push(line[:y_range][0..1])
+		#end
+		#@x_limits.sort!
+		#@y_limits.sort!
 	end
 
 	def warp(x,y)
@@ -25,9 +34,11 @@ class Snake
 		@y = y + (@height/2)
 	end
 
-	def move(player_x, player_y)
+	def move(player_x, player_y, eaten_shroom)
 		@player_x = player_x
 		@player_y = player_y
+		@eaten_shroom = eaten_shroom
+		kill_checker(@player_x, @player_y, @eaten_shroom)
 		chase_checker(@player_x, @player_y)
 		collision_checker
 		if @move_counter == 1
@@ -47,15 +58,15 @@ class Snake
 					@y += @speed
 				end
 			else
-				if @x > @player_x
-					@x -= @speed*3
+				if @x > @player_x 
+					@x -= @speed*2 unless @snake_colliders.left_collision
 				elsif @x < @player_x
-					@x += @speed*3
+					@x += @speed*2 unless @snake_colliders.right_collision
 				end
 				if @y > @player_y
-					@y -= @speed*3
+					@y -= @speed*2 unless @snake_colliders.top_collision
 				elsif @y < @player_y
-					@y += @speed*3
+					@y += @speed*2 unless @snake_colliders.bottom_collision
 				end
 			end
 		else
@@ -79,8 +90,6 @@ class Snake
 		 @chase_y_range = false
 		 @player_x = player_x
 		 @player_y = player_y
-		 #puts @player_x
-		 #puts @player_y
 		 @line_ranges.each do |line|
 		 	x_min = line[:x_range][0]
 		 	x_max = line[:x_range][1]
@@ -92,6 +101,19 @@ class Snake
 		 @chase_x_range && @chase_y_range ? @chase = true : @chase = false
 	end
 
+	def kill_checker(player_x, player_y, eaten_shroom)
+		@player_x = player_x
+		@player_y = player_y
+		@eaten_shroom = eaten_shroom
+		if @colliders_name == "snake_red" && Gosu.distance(@x, @y, @player_x, @player_y) < 4 && @eaten_shroom == false
+			@player_dead = true
+			puts "You dead"
+		elsif @colliders_name == "snake_blue" && Gosu.distance(@x, @y, @player_x, @player_y) < 4 && @eaten_shroom == false
+			@player_dead = true
+		#else
+			#@player_dead = false
+		end
+	end
 
 	def draw
 		@idle_anim.draw(@x - @width/2, @y - @height/2, 11)
