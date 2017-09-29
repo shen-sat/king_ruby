@@ -1,6 +1,5 @@
 class Snake	
-
-attr_reader :player_dead
+	attr_reader :player_dead
 
 	def initialize(colliders_name)
 		@idle_anim = Gosu::Image.new("snake_idle.png", :tileable => true)
@@ -108,10 +107,9 @@ attr_reader :player_dead
 		@eaten_shroom = eaten_shroom
 		if @colliders_name == "snake_red" && Gosu.distance(@x, @y, @player_x, @player_y) < 4 && @eaten_shroom == false
 			@player_dead = true
-			#puts "You dead"
+			puts "You dead"
 		elsif @colliders_name == "snake_blue" && Gosu.distance(@x, @y, @player_x, @player_y) < 4 && @eaten_shroom == false
 			@player_dead = true
-			#puts "you dead by blue snake"
 		#else
 			#@player_dead = false
 		end
