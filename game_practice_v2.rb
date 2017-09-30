@@ -6,6 +6,7 @@ require_relative 'mages'
 require_relative 'world'
 require_relative 'snake'
 require_relative 'mushrooms'
+require_relative 'screen'
 
 class Game_Window < Gosu::Window
   
@@ -15,16 +16,16 @@ class Game_Window < Gosu::Window
 	super(384, 256, false)
     self.caption = "game_practice"
 	#loads images from Tiled *DELETE IF NECCESSARY*
-	@background_image = Gosu::Tiled.load_json(self, "map.json")
-  @tree_image = Gosu::Image.new("tree.png", :tileable => true)
+	#@background_image = Gosu::Tiled.load_json(self, "map.json")
   
-	
+  
+	@game_screen = Screen.new 
 	@king = Player.new(collider_layer_name = "colliders")
 	@mages = Mages.new(collider_layer_name = "mages")
 	@snake_red = Snake.new(collider_layer_name = "snake_red")
 	@snake_blue = Snake.new(collider_layer_name = "snake_blue")
   @mushrooms = Mushrooms.new(collider_layer_name = "mushrooms")
-	@king.warp(32,40)
+	@king.warp(80,90)
 	@snake_red.warp(48,96)
   @snake_blue.warp(304,32)
 	
@@ -56,24 +57,23 @@ class Game_Window < Gosu::Window
     @mushrooms.collision_checker(@king.x, @king.y)
   	@snake_red.move(@king.x, @king.y, @mushrooms.eaten_shroom_red)
     @snake_blue.move(@king.x, @king.y, @mushrooms.eaten_shroom_blue)
-    death_checker
+    game_over
   end
 
-  def death_checker
-    #puts @snake_red.player_dead
-    #puts @snake_blue.player_dead
+  def game_over
+    if @snake_red.player_dead == true
+      @game_over_red = true
+    end
+    if @snake_blue.player_dead == true
+      @game_over_blue = true
+    end
   end
   
   
   
   def draw
-	@background_image.draw(0,0)
-  if @king.y > 50
-    @tree_depth = 3
-  else
-    @tree_depth = 30
-  end
-  @tree_image.draw(112,0,@tree_depth)
+	#@background_image.draw(0,0)
+  @game_screen.draw(@king.y, @game_over_red, @game_over_blue)
 	@king.draw
 	@mages.draw
 	@snake_red.draw

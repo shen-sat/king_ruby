@@ -107,7 +107,6 @@ class Snake
 		@eaten_shroom = eaten_shroom
 		if @colliders_name == "snake_red" && Gosu.distance(@x, @y, @player_x, @player_y) < 4 && @eaten_shroom == false
 			@player_dead = true
-			puts "You dead"
 		elsif @colliders_name == "snake_blue" && Gosu.distance(@x, @y, @player_x, @player_y) < 4 && @eaten_shroom == false
 			@player_dead = true
 		#else
