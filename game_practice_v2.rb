@@ -28,36 +28,46 @@ class Game_Window < Gosu::Window
 	@king.warp(80,90)
 	@snake_red.warp(48,96)
   @snake_blue.warp(304,32)
+  @game_over_red = false
+  @game_over_blue = false
 	
  end
   
   def update
-  	if Gosu.button_down? Gosu::KB_RIGHT
-  		@king.right
-  		if Gosu.button_down? Gosu::KB_UP
-  			@king.up
-  		elsif Gosu.button_down? Gosu::KB_DOWN
-  			@king.down
-  		end  			
-  	elsif Gosu.button_down? Gosu::KB_LEFT
-  		@king.left
-   		if Gosu.button_down? Gosu::KB_UP
-  			@king.up
-  		elsif Gosu.button_down? Gosu::KB_DOWN
-  			@king.down
-  		end 		
-  	elsif Gosu.button_down? Gosu::KB_UP
-  		@king.up
-  	elsif Gosu.button_down? Gosu::KB_DOWN
-  		@king.down
+  	game_over
+    if @game_over_red == true || @game_over_blue == true
+      if Gosu.button_down? Gosu::KB_RETURN
+        puts "Return pressed"
+        initialize
+      end
     else
-  		@king.idle
-  	end
+      if Gosu.button_down? Gosu::KB_RIGHT
+    		@king.right
+    		if Gosu.button_down? Gosu::KB_UP
+    			@king.up
+    		elsif Gosu.button_down? Gosu::KB_DOWN
+    			@king.down
+    		end  			
+    	elsif Gosu.button_down? Gosu::KB_LEFT
+    		@king.left
+     		if Gosu.button_down? Gosu::KB_UP
+    			@king.up
+    		elsif Gosu.button_down? Gosu::KB_DOWN
+    			@king.down
+    		end 		
+    	elsif Gosu.button_down? Gosu::KB_UP
+    		@king.up
+    	elsif Gosu.button_down? Gosu::KB_DOWN
+    		@king.down
+      else
+    		@king.idle
+    	end
+    end
   	@mages.collision_checker(@king.x, @king.y)
     @mushrooms.collision_checker(@king.x, @king.y)
   	@snake_red.move(@king.x, @king.y, @mushrooms.eaten_shroom_red)
     @snake_blue.move(@king.x, @king.y, @mushrooms.eaten_shroom_blue)
-    game_over
+    
   end
 
   def game_over
