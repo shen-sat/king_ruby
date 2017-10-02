@@ -7,6 +7,7 @@ require_relative 'world'
 require_relative 'snake'
 require_relative 'mushrooms'
 require_relative 'screen'
+require_relative 'chest'
 
 class Game_Window < Gosu::Window
   
@@ -25,6 +26,7 @@ class Game_Window < Gosu::Window
 	@snake_red = Snake.new(collider_layer_name = "snake_red")
 	@snake_blue = Snake.new(collider_layer_name = "snake_blue")
   @mushrooms = Mushrooms.new(collider_layer_name = "mushrooms")
+  @chest = Chest.new(collider_layer_name = "chest")
 	@king.warp(80,90)
 	@snake_red.warp(48,96)
   @snake_blue.warp(304,32)
@@ -67,6 +69,7 @@ class Game_Window < Gosu::Window
     @mushrooms.collision_checker(@king.x, @king.y)
   	@snake_red.move(@king.x, @king.y, @mushrooms.eaten_shroom_red)
     @snake_blue.move(@king.x, @king.y, @mushrooms.eaten_shroom_blue)
+    @chest.collision_checker(@king.x, @king.y)
     
   end
 
@@ -89,6 +92,7 @@ class Game_Window < Gosu::Window
 	@snake_red.draw
   @snake_blue.draw
 	@mushrooms.draw
+  @chest.draw
   end
 end
 
