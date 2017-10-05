@@ -27,7 +27,7 @@ class Game_Window < Gosu::Window
 	@snake_blue = Snake.new(collider_layer_name = "snake_blue")
   @mushrooms = Mushrooms.new(collider_layer_name = "mushrooms")
   @chest = Chest.new(collider_layer_name = "chest")
-	@king.warp(80,90)
+	@king.warp(160,88)
 	@snake_red.warp(48,96)
   @snake_blue.warp(304,32)
   @game_over_red = false

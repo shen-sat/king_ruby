@@ -2,7 +2,10 @@ class Snake
 	attr_reader :player_dead
 
 	def initialize(colliders_name)
-		@idle_anim = Gosu::Image.new("snake_idle.png", :tileable => true)
+		@blue_right_anim = Gosu::Image.load_tiles("snake_moves_blue_right.png", 32, 32)
+		@blue_left_anim = Gosu::Image.load_tiles("snake_moves_blue_left.png", 32, 32)
+		@red_right_anim = Gosu::Image.load_tiles("snake_moves_red_right.png", 32, 32)
+		@red_left_anim = Gosu::Image.load_tiles("snake_moves_red_left.png", 32, 32)
 		@height = 32
 		@width = 32
 		@speed = 1
@@ -47,21 +50,51 @@ class Snake
 				if @moving_right && @moving_up
 					@x += @speed
 					@y -= @speed
+					if @colliders_name == "snake_blue"
+						@image = @blue_right_anim[Gosu.milliseconds / 200 % @blue_right_anim.size]
+					else
+						@image = @red_right_anim[Gosu.milliseconds / 200 % @red_right_anim.size]
+					end 
 				elsif @moving_right && @moving_up == false
 					@x += @speed
 					@y += @speed
+					if @colliders_name == "snake_blue"
+						@image = @blue_right_anim[Gosu.milliseconds / 200 % @blue_right_anim.size]
+					else
+						@image = @red_right_anim[Gosu.milliseconds / 200 % @red_right_anim.size]
+					end 
 				elsif @moving_right == false && @moving_up
 					@x -= @speed
 					@y -= @speed
+					if @colliders_name == "snake_blue"
+						@image = @blue_left_anim[Gosu.milliseconds / 200 % @blue_left_anim.size]
+					else
+						@image = @red_left_anim[Gosu.milliseconds / 200 % @red_left_anim.size]
+					end
 				else
 					@x -= @speed
 					@y += @speed
+					if @colliders_name == "snake_blue"
+						@image = @blue_left_anim[Gosu.milliseconds / 200 % @blue_left_anim.size]
+					else
+						@image = @red_left_anim[Gosu.milliseconds / 200 % @red_left_anim.size]
+					end
 				end
 			else
 				if @x > @player_x 
 					@x -= @speed*2 unless @snake_colliders.left_collision
+					if @colliders_name == "snake_blue"
+						@image = @blue_left_anim[Gosu.milliseconds / 200 % @blue_left_anim.size]
+					else
+						@image = @red_left_anim[Gosu.milliseconds / 200 % @red_left_anim.size]
+					end
 				elsif @x < @player_x
 					@x += @speed*2 unless @snake_colliders.right_collision
+					if @colliders_name == "snake_blue"
+						@image = @blue_right_anim[Gosu.milliseconds / 200 % @blue_right_anim.size]
+					else
+						@image = @red_right_anim[Gosu.milliseconds / 200 % @red_right_anim.size]
+					end 
 				end
 				if @y > @player_y
 					@y -= @speed*2 unless @snake_colliders.top_collision
@@ -115,7 +148,7 @@ class Snake
 	end
 
 	def draw
-		@idle_anim.draw(@x - @width/2, @y - @height/2, 11)
+		@image.draw(@x - @width/2, @y - @height/2, 11)
 	end
 
 end
