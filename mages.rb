@@ -8,7 +8,7 @@ class Mages
 				@mages_data_from_tiled =  x["objects"]
 			end
 		end
-		@mage_head_image = Gosu::Image.new("mage_head.png", :tileable => true)
+		@mage_head_image = Gosu::Image.new("images/mage_head.png", :tileable => true)
 	end
 	def collision_checker(player_x, player_y)
 		@player_x = player_x

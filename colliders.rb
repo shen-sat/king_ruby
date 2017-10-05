@@ -3,8 +3,10 @@ class Colliders
 	attr_reader :bottom_collision
 	attr_reader :left_collision
 	attr_reader :right_collision
-
+	
 	def initialize(collider_name, buffer, centre_and_top_gap, centre_and_bottom_gap, centre_and_left_gap, centre_and_right_gap)
+	#collider_name is the name (a string) given to the collider layer in Tiled
+	#rest of arguments are the size of the gaps required between different parts of a sprite and the colliders
 		@collider_name = collider_name
 		@buffer = buffer
 		@centre_and_top_gap = centre_and_top_gap
@@ -14,67 +16,65 @@ class Colliders
 	end
 
 	def calculate_lines
-	#----colllider code begins----
-	#loads the json map file exported from Tiled
+	#loads the json map file exported from Tiled, with all its collider layers
 	file = File.read("map.json")
 	data_hash = JSON.parse(file)
-	#locates the array named "objects" within the json file and assigns it. "objects" in the json file contains the coordinates for each collider
+	#locates the array named "objects" within the json file and assigns it. "objects" in the json file contains the coordinates for every point in the colliders
 	data_hash["layers"].each do |x|
 		if x["name"] == "#{@collider_name}"
 			@data_from_tiled =  x["objects"]
 		end
 	end
-	#the coordinates for each collider within the json file are relative and not actual. We'll need to adjust them using the origin of each collider
+	#the coordinates for each point within the json file are relative and not actual. We'll need to adjust them using the origin of each collider
 	
-	#first we set up an array to collect the colliders once we've adjusted them
+	#first we set up an array to collect the points once we've adjusted them
 	@colliders = []
-	#this is a temp storage for each collider. We'll use it later to pass each coller seperately to @colliders
+	#this is a temp storage for each point. We'll use it later to pass each point seperately to @colliders
 	@temp_collider_storage = []
-	#then we go into the data from teh json file and retrieve and assign the origin of each collider 
+	#then we go into the data from the json file and retrieve and assign the origin of each collider 
 	@data_from_tiled.each do |data|
 		polyline_x_origin = data["x"]
 		polyline_y_origin = data["y"]
-		#then we take every coordinate within each collider and adjust it relative to the collider's origin
+		#then we take every coordinate for each point and adjust it relative to the collider's origin to get its 'true' value
 		data["polyline"].each do |polyline_point|
 			adjusted_polyline_x = polyline_point["x"] + polyline_x_origin
 			adjusted_polyline_y = polyline_point["y"] + polyline_y_origin 
-			#then we pass the adjusted coordinates of each collider to the temp storage array
+			#then we pass the adjusted coordinates of each point to the temp storage array
 			@temp_collider_storage.push ({x: adjusted_polyline_x, y: adjusted_polyline_y})
 		end
-		#then we pass the adjusted coordinates to @colliders. Doing it like this ensures that the colliders are passed one at a time, as seperate objects
+		#then we pass the adjusted coordinates to @colliders. Doing it like this ensures that each point is passed one at a time, as seperate objects
 		@colliders.push @temp_collider_storage
-		#this resets the temp storage array so it can be used to collect the next collider's adjusted coordinates
+		#this resets the temp storage array so it can be used to collect the next point's adjusted coordinates
 		@temp_collider_storage = []
 	end
 	
-	#next, we set up an array to collect the coordinates of each line that makes up wevery collider. 
-	#Each line (like any line) will have two coordinates. The end coordinate of one line will be the starting coordinate of the next line in the collider
+	#next, we set up an array to pair-up the points of each line that makes up every collider. 
+	#Each line (like any line) will have two points ie coordinates. The end coordinate of one line will be the starting coordinate of the next line in the collider
 	@lines = []
-	#then we take each collider...
-	@colliders.each do |collider|
+	#so we take each point...
+	@colliders.each do |point|
 		#...and access each of its coordinates, along with each coordinate's array index (its numercal location in the array)
-		collider.each_with_index do |coordinate, i|  
+		point.each_with_index do |coordinate, i|  
 			#if the coordinate doesn't have a following coordinate, nothing happens. 
-			#Otherwise the coordinate is pushed with its ajacent coordinate into @lines (each pair of coordinates now represents a line in its collider)
-			if collider[i + 1].nil?
+			#Otherwise the coordinate is pushed with its ajacent coordinate into @lines (each pair of coordinates, or points, now represents a line in its collider)
+			if point[i + 1].nil?
 				0
 			else
-				next_coordinate = collider[i+1]
+				next_coordinate = point[i+1]
 				@lines.push [coordinate, next_coordinate]
 			end
 		end
 	end
 	#Now we want to work out the 'range' of each line so we can find out if the player will bump into it
-	#Fisrt set up an array to collect the ranges for each line
+	#First set up an array to collect the ranges for each line
 	@line_ranges = []
-	#Then for each line we extract the two x values and sort them from low to high. Same with y values. Then push to @ines_ranges.
+	#Then for each line we extract the two x values and sort them from low to high. Same with y values. Then push to @lines_ranges.
 	@lines.each do |line|
 		x_values_sorted = [line[0][:x], line[1][:x]].sort!
 		y_values_sorted = [line[0][:y], line[1][:y]].sort!
 		@line_ranges.push ({x_range: x_values_sorted, y_range: y_values_sorted})
 	end
-	#@lines_ranges can now be passed to whatever character needs to know environmental colliders
-	#----collider code ends----
+	#@lines_ranges can now be passed to whatever entity needs to know colliders
 	@line_ranges
 	end
 	
@@ -82,7 +82,6 @@ class Colliders
 		@x = x
 		@y = y
 		@speed = speed
-		#@gap_between_player_bottom_and_top_collider = gap_between_player_bottom_and_top_collider
 		player_top_and_buffer = y + @centre_and_top_gap + @buffer
 		player_right = @x + 6
 		player_left = @x - 6

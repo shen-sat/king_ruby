@@ -1,7 +1,0 @@
-require 'json'
-require 'gosu'
-require 'gosu_tiled'
-
-#sets the directory to where the game is located *DELETE IF NECCESSARY*
-Dir.chdir "c:/"
-Dir.chdir "users/shen/desktop/workspace/chip"

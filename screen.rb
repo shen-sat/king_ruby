@@ -1,8 +1,8 @@
 class Screen
 	def initialize
-		@map_screen = Gosu::Image.new("map.png", :tileable => true)
-		@game_over_screen = Gosu::Image.new("game_over.png", :tileable => true)
-		@tree = Gosu::Image.new("tree.png", :tileable => true)
+		@map_screen = Gosu::Image.new("images/map.png", :tileable => true)
+		@game_over_screen = Gosu::Image.new("images/game_over.png", :tileable => true)
+		@tree = Gosu::Image.new("images/tree.png", :tileable => true)
 		@game_over_red_text = Gosu::Image.from_text("You were killed by a RED snake." + "\n" + "Press enter to restart.", 16, {})
 		@game_over_blue_text = Gosu::Image.from_text("You were killed by a BLUE snake." + "\n" + "Press enter to restart.", 16, {})
 	end

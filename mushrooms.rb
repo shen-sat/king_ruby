@@ -5,8 +5,8 @@ class Mushrooms
 	def initialize(colliders_name)
 		@eaten_shroom_blue = false
 		@eaten_shroom_red = false
-		@blue_shroom_image = Gosu::Image.new("blue_mushrooom_big.png", :tileable => true)
-  		@red_shroom_image = Gosu::Image.new("red_mushroom2_big.png", :tileable => true)
+		@blue_shroom_image = Gosu::Image.new("images/blue_mushrooom_big.png", :tileable => true)
+  		@red_shroom_image = Gosu::Image.new("images/red_mushroom2_big.png", :tileable => true)
 		@colliders_name = colliders_name
 		@width = 16
 		@height = 16
@@ -22,10 +22,10 @@ class Mushrooms
 			centre_x = data["x"] + (data["width"]/2)
 			centre_y = data["y"] + (data["height"]/2)
 			if data["name"] == "red"
-				@all_mushrooms.push ({shroom_type: "red", shroom_image: Gosu::Image.new("red_mushroom2.png"), centre_x: centre_x, centre_y: centre_y})
+				@all_mushrooms.push ({shroom_type: "red", shroom_image: Gosu::Image.new("images/red_mushroom2.png"), centre_x: centre_x, centre_y: centre_y})
 			end
 			if data["name"] == "blue"
-				@all_mushrooms.push ({shroom_type: "blue", shroom_image: Gosu::Image.new("blue_mushrooom.png"), centre_x: centre_x, centre_y: centre_y})
+				@all_mushrooms.push ({shroom_type: "blue", shroom_image: Gosu::Image.new("images/blue_mushrooom.png"), centre_x: centre_x, centre_y: centre_y})
 			end
 		end
 	end
@@ -58,5 +58,4 @@ class Mushrooms
 		end
 	end
 
-	
 end

@@ -1,8 +1,8 @@
 class Chest
 
 	def initialize(colliders_name)
-		@closed_chest_image = Gosu::Image.new("chest_closed_trans.png", :tileable => true)
-		@open_chest_image = Gosu::Image.new("chest_open_trans.png", :tileable => true)
+		@closed_chest_image = Gosu::Image.new("images/chest_closed_trans.png", :tileable => true)
+		@open_chest_image = Gosu::Image.new("images/chest_open_trans.png", :tileable => true)
 		@win_text = Gosu::Image.from_text("You win!", 16, {})
 		@width = 16
 		@height = 14

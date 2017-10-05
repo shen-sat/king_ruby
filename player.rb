@@ -3,10 +3,9 @@ class Player
 	attr_reader :y
 
 	def initialize(colliders_name)
-		@idle_anim = Gosu::Image.new("king_dummy_v4.png", :tileable => true)
-		@right_walk_anim = Gosu::Image.load_tiles("king_walk_right.png", 32, 32)
-		@left_walk_anim = Gosu::Image.load_tiles("king_walk_left.png", 32, 32)
-		
+		@idle_anim = Gosu::Image.new("images/king_dummy_v4.png", :tileable => true)
+		@right_walk_anim = Gosu::Image.load_tiles("images/king_walk_right.png", 32, 32)
+		@left_walk_anim = Gosu::Image.load_tiles("images/king_walk_left.png", 32, 32)
 		@right_flag = true
 		@image = @idle_anim
 		@width = 32
@@ -25,7 +24,6 @@ class Player
 	def warp(x,y)
 		@x = x + @width/2
 		@y = y + @height/2
-		
 	end
 
 	def idle
@@ -67,8 +65,7 @@ class Player
 	end
 	
 	def draw
-		#.draw always draws an image from its top-left corner. We therefore can't pass it @x and @y because these are the player's centre coordinates.
-		#We therefore modify @x and @y to give the image's top-left corner coordinates
 		@image.draw(@x - @width/2, @y - @height/2, 10)
 	end
+	
 end

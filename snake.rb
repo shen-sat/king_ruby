@@ -2,10 +2,10 @@ class Snake
 	attr_reader :player_dead
 
 	def initialize(colliders_name)
-		@blue_right_anim = Gosu::Image.load_tiles("snake_moves_blue_right.png", 32, 32)
-		@blue_left_anim = Gosu::Image.load_tiles("snake_moves_blue_left.png", 32, 32)
-		@red_right_anim = Gosu::Image.load_tiles("snake_moves_red_right.png", 32, 32)
-		@red_left_anim = Gosu::Image.load_tiles("snake_moves_red_left.png", 32, 32)
+		@blue_right_anim = Gosu::Image.load_tiles("images/snake_moves_blue_right.png", 32, 32)
+		@blue_left_anim = Gosu::Image.load_tiles("images/snake_moves_blue_left.png", 32, 32)
+		@red_right_anim = Gosu::Image.load_tiles("images/snake_moves_red_right.png", 32, 32)
+		@red_left_anim = Gosu::Image.load_tiles("images/snake_moves_red_left.png", 32, 32)
 		@height = 32
 		@width = 32
 		@speed = 1
@@ -22,14 +22,6 @@ class Snake
 		@move_counter = 1
 		@frame_speed = 1
 		@chase = false
-		#@x_limits = []
-		#@y_limts = []
-		#@line_ranges.each do |line|
-			#@x_limits.push(line[:x_range][0..1])
-			#@y_limits.push(line[:y_range][0..1])
-		#end
-		#@x_limits.sort!
-		#@y_limits.sort!
 	end
 
 	def warp(x,y)
